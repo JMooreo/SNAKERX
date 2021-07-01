@@ -89,7 +89,7 @@ if __name__ == "__main__":
     print(f"Bonuses: {best_team_bonuses}")
     print()
     print("Other Good teams")
-    file = open("Desktop/snake-rx-results.txt", "w")
+    file = open("snake-rx-results.txt", "w")
 
     file.write(f"Went through {num_iterations} iterations.\n")
     file.write(f"Average iteration time: {totalTime/num_iterations}\n")

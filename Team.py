@@ -9,12 +9,8 @@ class Team:
     def get_synergies(self):
         synergies = {}
 
-        for agent in self.agents:
-            for synergy in agent.synergies:
-                try:
-                    synergies[synergy] += 1
-                except KeyError as e:
-                    synergies[synergy] = 1
+        for key in [synergy for agent in self.agents for synergy in agent.synergies]:
+            synergies[key] = synergies.get(key, 0) + 1
 
         return synergies
 

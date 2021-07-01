@@ -39,7 +39,7 @@ class SetBonus:
         try:
             return synergies[self.synergy] // self.level_cost
         except KeyError as e:
-            return
+            return 0
 
         
 
