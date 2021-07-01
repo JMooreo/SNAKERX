@@ -95,41 +95,42 @@ def run(num_agents_per_team=7, override=False, override_max_iters=1000000, loggi
     return best_team, other_good_teams, num_iterations
 
 def main():
-    run(
+    return run(
         num_agents_per_team=7, 
         override=True, 
-        override_max_iters=100000,
+        override_max_iters=1000000,
         logging_threshold=10000
     )
 
 
 if __name__ == "__main__":
-    import cProfile
-    cProfile.run('main()', 'performance/output.dat')
+    profiling = False
 
-    import pstats
-    from pstats import SortKey
+    if profiling:
+        import cProfile
+        cProfile.run('main()', 'performance/output.dat')
 
-    with open("performance/output_time.txt", "w") as f:
-        p = pstats.Stats("performance/output.dat", stream=f)
-        p.sort_stats("time").print_stats()
+        import pstats
+        from pstats import SortKey
 
-    with open("performance/output_calls.txt", "w") as f:
-        p = pstats.Stats("performance/output.dat", stream=f)
-        p.sort_stats("calls").print_stats()
+        with open("performance/output_time.txt", "w") as f:
+            p = pstats.Stats("performance/output.dat", stream=f)
+            p.sort_stats("time").print_stats()
 
+        with open("performance/output_calls.txt", "w") as f:
+            p = pstats.Stats("performance/output.dat", stream=f)
+            p.sort_stats("calls").print_stats()
+    else:
 
-    # performance = Performance()
+        # NOT using cProfiler
 
-    # # performance.start()
-    # main()
-        
-    # stats = pstats.Stats(pr)
-    # stats.sort_stats(pstats.SortKey.TIME)
-    # stats.print_stats()
+        performance = Performance()
+        performance.start()
 
-    # performance.stop()
+        best_team, other_good_teams, num_iterations = main()
 
-    # for output in [FileOutput(f"output/snake-rx-results-{time.time()}.txt")]:
-    #     display_profiling_info(output, num_iterations, performance)
-    #     display_best_teams(output, best_team, other_good_teams)
+        performance.stop()
+
+        for output in [FileOutput(f"output/snake-rx-results-{time.time()}.txt")]:
+            display_profiling_info(output, num_iterations, performance)
+            display_best_teams(output, best_team, other_good_teams)
