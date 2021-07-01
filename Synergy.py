@@ -1,3 +1,4 @@
+import math
 
 class SetBonus:
     def __init__(self, synergy, num_levels, level_cost):
@@ -13,8 +14,6 @@ class SetBonus:
 
     def get_bonus_level_achieved(self, synergies):
         return synergies.get(self.synergy, 0) // self.level_cost
-
-        
 
 class RogueSetBonus(SetBonus):
     def __init__(self):

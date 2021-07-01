@@ -9,7 +9,6 @@ import operator as op
 import time
 from functools import reduce
 from Output import ConsoleOutput, FileOutput
-from Performance import Performance
 
 def get_agents():
     return allAgents.copy()
@@ -23,8 +22,7 @@ def ncr(n, r):
     denom = reduce(op.mul, range(1, r+1), 1)
     return numer // denom
 
-def display_profiling_info(output, num_iterations, performance):
-    total_time = performance.get_diff()
+def display_profiling_info(output, num_iterations, total_time):
     total_time_with_label = f"{total_time} seconds" if total_time < 3600 else f"{round(total_time/3600, 2)} hours" 
 
     output.write_line(f"Went through {num_iterations} iterations.")
@@ -60,7 +58,7 @@ def display_best_teams(output, best_team, other_good_teams):
             output.write_line(f"Score{team.score}")
             output.write_line("")
 
-def run(num_agents_per_team=7, override=False, override_max_iters=1000000, logging_threshold=100000):
+def run(num_agents_per_team=7, override=False, override_max_iters=1000000):
     i = 0
     num_combinations = ncr(len(allAgents), num_agents_per_team)
     num_iterations = num_combinations if not override else override_max_iters
@@ -98,8 +96,7 @@ def main():
     return run(
         num_agents_per_team=7, 
         override=True, 
-        override_max_iters=1000000,
-        logging_threshold=10000
+        override_max_iters=1000000
     )
 
 
@@ -124,13 +121,13 @@ if __name__ == "__main__":
 
         # NOT using cProfiler
 
-        performance = Performance()
-        performance.start()
+        t0 = time.perf_counter()
 
         best_team, other_good_teams, num_iterations = main()
 
-        performance.stop()
+        t1 = time.perf_counter()
+        total_time = t1-t0
 
         for output in [FileOutput(f"output/snake-rx-results-{time.time()}.txt")]:
-            display_profiling_info(output, num_iterations, performance)
+            display_profiling_info(output, num_iterations, total_time)
             display_best_teams(output, best_team, other_good_teams)
