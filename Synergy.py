@@ -36,10 +36,7 @@ class SetBonus:
         return str(self)
 
     def get_bonus_level_achieved(self, synergies):
-        try:
-            return synergies[self.synergy] // self.level_cost
-        except KeyError as e:
-            return 0
+        return synergies.get(self.synergy, 0) // self.level_cost
 
         
 
@@ -99,9 +96,9 @@ class VoiderSetBonus(SetBonus):
     def __init__(self):
         super().__init__(Synergy.Voider, 2, 2)
 
-# class PsykerSetBonus(SetBonus):
-#     def __init__(self):
-#         super().__init__(Synergy.Psyker, 1, 1)
+class PsykerSetBonus(SetBonus):
+    def __init__(self):
+        super().__init__(Synergy.Psyker, 1, 1)
 
 allSetBonuses = [
     RogueSetBonus(),
