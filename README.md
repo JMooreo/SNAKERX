@@ -14,5 +14,5 @@ The program will write the team with the highest score to the console, but also 
 # Performance (for nerds)
 I'm convinced that this program is not completely optimized. I left the profiler in there in case someone wants to analyze and optimize this code further.
 As of July 1, 2021, here are the stats:
-- Average time per iteration: ~20 microseconds
-- Total Time to complete 115 million iterations: ~38 minutes
+- Average time per iteration: ~10 microseconds
+- Total Time to complete 115 million iterations: ~20 minutes
