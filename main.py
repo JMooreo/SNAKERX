@@ -10,19 +10,15 @@ import time
 from functools import reduce
 from Output import ConsoleOutput, FileOutput
 
-def get_agents():
-    return allAgents.copy()
-
-def get_set_bonuses():
-    return allSetBonuses.copy()
-
+# Math to compute the number of combinations of 'r' things from 'n' total things.
 def ncr(n, r):
     r = min(r, n-r)
     numer = reduce(op.mul, range(n, n-r, -1), 1)
     denom = reduce(op.mul, range(1, r+1), 1)
     return numer // denom
 
-def display_profiling_info(output, num_iterations, total_time):
+# Displaying some useful, general statistics as a performance summary.
+def display_performance_summary(output, num_iterations, total_time):
     total_time_with_label = f"{total_time} seconds" if total_time < 3600 else f"{round(total_time/3600, 2)} hours" 
 
     output.write_line(f"Went through {num_iterations} iterations.")
@@ -30,6 +26,7 @@ def display_profiling_info(output, num_iterations, total_time):
     output.write_line(f"Total Time: {total_time_with_label}")
     output.write_line(f"Average iteration time: {1000000*total_time/num_iterations} microseconds")
 
+# Display the teams with the highest scores
 def display_best_teams(output, best_team, other_good_teams):
     best_team_set_bonuses = []
     
@@ -70,10 +67,10 @@ def run(num_agents_per_team=7, override=False, override_max_iters=1000000):
     # For all the combinations of 7 of these agents:
     for agent_combination in itertools.combinations(allAgents, num_agents_per_team):
         if override:
-            if i >= override_max_iters:
+            if i == override_max_iters:
                 break
 
-        # Logging
+        # Progress logging
         if i % 100000 == 0:
             print(f"{i}/{num_iterations} - {int(100*i/num_iterations)}%", end="\r")
 
@@ -101,7 +98,7 @@ def main():
 
 
 if __name__ == "__main__":
-    profiling = False
+    profiling = True
 
     if profiling:
         import cProfile
@@ -129,5 +126,5 @@ if __name__ == "__main__":
         total_time = t1-t0
 
         for output in [FileOutput(f"output/snake-rx-results-{time.time()}.txt")]:
-            display_profiling_info(output, num_iterations, total_time)
+            display_performance_summary(output, num_iterations, total_time)
             display_best_teams(output, best_team, other_good_teams)
