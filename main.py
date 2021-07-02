@@ -98,7 +98,7 @@ def main():
 
 
 if __name__ == "__main__":
-    profiling = True
+    profiling = False
 
     if profiling:
         import cProfile
@@ -125,6 +125,6 @@ if __name__ == "__main__":
         t1 = time.perf_counter()
         total_time = t1-t0
 
-        for output in [FileOutput(f"output/snake-rx-results-{time.time()}.txt")]:
+        for output in [ConsoleOutput(), FileOutput(f"output/snake-rx-results-{time.time()}.txt")]:
             display_performance_summary(output, num_iterations, total_time)
             display_best_teams(output, best_team, other_good_teams)
