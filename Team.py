@@ -18,5 +18,11 @@ class Team:
         return synergies
 
     def get_score(self):
-        return sum([setBonus.get_bonus_level_achieved(self.synergies) for setBonus in allSetBonuses]) + sum([agent.cost for agent in self.agents])
+        # Heavily score based on number of complete synergy levels,
+        # But also factor in that higher cost units are better.
+        # TODO: change scoring metric to be based on estimated damage per second.
+        return sum(
+            setBonus.get_bonus_level_achieved(self.synergies)
+            for setBonus in allSetBonuses
+        ) + 0.25 * sum(agent.cost for agent in self.agents)
 
