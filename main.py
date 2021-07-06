@@ -58,7 +58,7 @@ def display_best_teams(output, best_team, other_good_teams):
 def run(num_agents_per_team=7, override=False, override_max_iters=1000000):
     i = 0
     num_combinations = ncr(len(allAgents), num_agents_per_team)
-    num_iterations = num_combinations if not override else override_max_iters
+    num_iterations = num_combinations if not override else min(override_max_iters, num_combinations)
 
     best_team = []
     other_good_teams = []
@@ -66,9 +66,8 @@ def run(num_agents_per_team=7, override=False, override_max_iters=1000000):
 
     # For all the combinations of 7 of these agents:
     for agent_combination in itertools.combinations(allAgents, num_agents_per_team):
-        if override:
-            if i == override_max_iters:
-                break
+        if override and i == override_max_iters:
+            break
 
         # Progress logging
         if i % 100000 == 0:
@@ -82,7 +81,7 @@ def run(num_agents_per_team=7, override=False, override_max_iters=1000000):
             best_team_score = team.score
             best_team = team
             other_good_teams = []
-        elif (team.score >= best_team_score - 1):
+        elif (team.score >= best_team_score - 0.25):
             other_good_teams.append(team)
 
         i += 1

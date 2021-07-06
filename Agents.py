@@ -51,7 +51,7 @@ class DualGunner(Agent):
 
 class Hunter(Agent):
     def __init__(self):
-        super().__init__(2, ["Rogue", "Ranger"])
+        super().__init__(2, ["Ranger", "Conjurer", "Forcer"])
 
 class Barrager(Agent):
     def __init__(self):
@@ -267,8 +267,8 @@ allAgents = [
     Blade(),
     Highlander(),
     Warden(),
-    # Merchant(),
-    # Miner(),
+    Merchant(),
+    Miner(),
     Gambler(),
     Scout(),
     Saboteur(),

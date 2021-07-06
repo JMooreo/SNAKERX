@@ -75,6 +75,10 @@ class PsykerSetBonus(SetBonus):
     def __init__(self):
         super().__init__("Psyker", 1, 1)
 
+    # Prevent Psykers from achieving more than one level of synergy, efficiently.   
+    def get_bonus_level_achieved(self, synergies):
+        return min(1, super().get_bonus_level_achieved(synergies))
+
 allSetBonuses = [
     RogueSetBonus(),
     NukerSetBonus(),
@@ -85,10 +89,10 @@ allSetBonuses = [
     SorcererSetBonus(),
     WarriorSetBonus(),
     ForcerSetBonus(),
-    # MercenarySetBonus(),
+    MercenarySetBonus(),
     ConjurerSetBonus(),
     SwarmerSetBonus(),
     CurserSetBonus(),
     VoiderSetBonus(),
-    # PsykerSetBonus()
+    PsykerSetBonus()
 ]
