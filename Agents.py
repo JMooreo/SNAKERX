@@ -1,4 +1,3 @@
-from Stats import Stats
 from Agent import Agent
 
 
